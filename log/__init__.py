@@ -1,18 +1,13 @@
 import logging
-
-from logstash_async.handler import AsynchronousLogstashHandler
+import sys
 
 from audit_log import app_settings
 from audit_log.formatter import AuditLogFormatter
 
 audit_logger = logging.getLogger(app_settings.AUDIT_LOG_LOGGER_NAME)
 audit_logger.setLevel(logging.INFO)
+audit_logger.propagate = False
 
-handler = AsynchronousLogstashHandler(
-    transport='logstash_async.transport.TcpTransport',
-    host=app_settings.AUDIT_LOG_LOGSTASH_HOST,
-    port=app_settings.AUDIT_LOG_LOGSTASH_PORT,
-    database_path='logstash.db')
-
+handler = logging.StreamHandler(stream=sys.stdout)
 handler.setFormatter(AuditLogFormatter())
 audit_logger.addHandler(handler)

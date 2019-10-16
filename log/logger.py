@@ -46,7 +46,7 @@ class AuditLog(BaseLog):
             authenticated=user.is_authenticated if user else False,
             provider=request.session.get('_auth_user_backend', '') if hasattr(request, 'session') else '',
             realm=realm,
-            email=user.email if user else '',
+            email=getattr(user, 'email', '') if user else '',
             roles=roles,
             ip=get_client_ip(request)
         )
@@ -92,7 +92,7 @@ class AuditLog(BaseLog):
         audit_logger.log(
             self.level,
             self.message,
-            extra=self.get_extras(logging.getLevelName(self.level)))
+            extra={'audit': self.get_extras(logging.getLevelName(self.level))})
 
     def _get_headers_from_response(self, response):
         return {header: value for header, value in response.items()}
