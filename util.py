@@ -9,7 +9,7 @@ def get_client_ip(request):
         else:
             ip = request.META.get('REMOTE_ADDR')
         return ip
-    except Exception as e:
+    except Exception:
         logger = logging.getLogger(__name__)
         logger.warning('Failed to get ip for audit log', exc_info=True)
         return 'failed to get ip'

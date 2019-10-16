@@ -6,12 +6,15 @@ from audit_log.util import get_client_ip
 
 
 class AuditLog(BaseLog):
-    app = None
-    http_request = None
-    http_response = None
-    user = None
-    filter = None
-    results = None
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.app = None
+        self.http_request = None
+        self.http_response = None
+        self.user = None
+        self.filter = None
+        self.results = None
 
     def set_app_name(self, name):
         self.app = {
@@ -28,12 +31,7 @@ class AuditLog(BaseLog):
         return self
 
     def set_http_response(self, response):
-        headers = response.serialize_headers().decode('ascii') \
-            if hasattr(response, 'serialize_headers') and callable(getattr(response, 'serialize_headers')) \
-            else ''
-
-        headers = {header.split(':', 1)[0].strip(): header.split(':', 1)[1].strip() for header in
-                   headers.split('\r\n')}
+        headers = self._get_headers_from_response(response)
         self.http_response = {
             'status_code': getattr(response, 'status_code', ''),
             'reason': getattr(response, 'reason_phrase', ''),
@@ -41,13 +39,14 @@ class AuditLog(BaseLog):
         }
         return self
 
-    def set_user_fom_request(self, request, realm=''):
-        roles = list(request.user.groups.values_list('name', flat=True)) if request.user else []
+    def set_user_from_request(self, request, realm=''):
+        user = request.user if hasattr(request, 'user') else None
+        roles = list(user.groups.values_list('name', flat=True)) if user else []
         self.set_user(
-            authenticated=request.user.is_authenticated if request.user else False,
-            provider=request.session.get('_auth_user_backend', ''),
+            authenticated=user.is_authenticated if user else False,
+            provider=request.session.get('_auth_user_backend', '') if hasattr(request, 'session') else '',
             realm=realm,
-            email=getattr(request.user, 'email', ''),
+            email=user.email if user else '',
             roles=roles,
             ip=get_client_ip(request)
         )
@@ -94,3 +93,6 @@ class AuditLog(BaseLog):
             self.level,
             self.message,
             extra=self.get_extras(logging.getLevelName(self.level)))
+
+    def _get_headers_from_response(self, response):
+        return {header: value for header, value in response.items()}
