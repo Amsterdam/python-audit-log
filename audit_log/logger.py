@@ -9,7 +9,6 @@ class AuditLogger:
         super().__init__()
         self.level = logging.INFO
         self.message = ''
-        self.app = None
         self.http_request = None
         self.http_response = None
         self.user = None
@@ -39,12 +38,6 @@ class AuditLogger:
     def critical(self, msg: str) -> 'AuditLogger':
         self.level = logging.CRITICAL
         self.message = msg
-        return self
-
-    def set_app_name(self, name: str) -> 'AuditLogger':
-        self.app = {
-            'name': name,
-        }
         return self
 
     def set_http_request(self, method: str, url: str, user_agent: str = '') -> 'AuditLogger':
@@ -97,7 +90,6 @@ class AuditLogger:
 
     def _get_extras(self, log_type: str) -> dict:
         return {
-            'app': self.app,
             'http_request': self.http_request,
             'http_response': self.http_response,
             'user': self.user,

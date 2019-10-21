@@ -11,7 +11,6 @@ class TestAuditlogger(TestCase):
         auditlog = AuditLogger()
         self.assertEqual(auditlog.level, logging.INFO)
         self.assertEqual(auditlog.message, '')
-        self.assertIsNone(auditlog.app)
         self.assertIsNone(auditlog.http_request)
         self.assertIsNone(auditlog.http_response)
         self.assertIsNone(auditlog.user)
@@ -47,11 +46,6 @@ class TestAuditlogger(TestCase):
         auditlog.critical('test')
         self.assertEqual(auditlog.level, logging.CRITICAL)
         self.assertEqual(auditlog.message, 'test')
-
-    def test_set_app_name(self):
-        log = AuditLogger()
-        log.set_app_name('test')
-        self.assertEqual(log.app['name'], 'test')
 
     def test_set_http_request(self):
         auditlog = AuditLogger()
@@ -101,14 +95,6 @@ class TestAuditlogger(TestCase):
         for results in test_results:
             auditlog.set_results(results)
             self.assertEqual(auditlog.results, results)
-
-    def test_extras_app_name(self):
-        auditlog = AuditLogger()
-        auditlog.set_app_name('test')
-
-        extras = auditlog._get_extras(log_type='test')
-        self.assertIn('app', extras)
-        self.assertEqual(extras['app']['name'], 'test')
 
     def test_extras_http_request(self):
         auditlog = AuditLogger()
@@ -178,7 +164,6 @@ class TestAuditlogger(TestCase):
     @patch('audit_log.logger.audit_logger')
     def test_send_log_info(self, mocked_audit_logger):
         extected_extra = {'audit': {
-                'app': None,
                 'http_request': None,
                 'http_response': None,
                 'user': None,
