@@ -78,7 +78,7 @@ class AuditLogger:
         }
         return self
 
-    def set_results(self, results: list = None) -> 'AuditLogger':
+    def set_results(self, results: list) -> 'AuditLogger':
         self.results = results
         return self
 
@@ -95,5 +95,6 @@ class AuditLogger:
             'user': self.user,
             'filter': self.filter,
             'results': self.results,
-            'type': log_type
+            'type': log_type,
+            'message': self.message
         }

@@ -8,84 +8,84 @@ from audit_log.logger import AuditLogger
 class TestAuditlogger(TestCase):
 
     def test_default_log_level(self):
-        auditlog = AuditLogger()
-        self.assertEqual(auditlog.level, logging.INFO)
-        self.assertEqual(auditlog.message, '')
-        self.assertIsNone(auditlog.http_request)
-        self.assertIsNone(auditlog.http_response)
-        self.assertIsNone(auditlog.user)
-        self.assertIsNone(auditlog.filter)
-        self.assertIsNone(auditlog.results)
+        audit_log = AuditLogger()
+        self.assertEqual(audit_log.level, logging.INFO)
+        self.assertEqual(audit_log.message, '')
+        self.assertIsNone(audit_log.http_request)
+        self.assertIsNone(audit_log.http_response)
+        self.assertIsNone(audit_log.user)
+        self.assertIsNone(audit_log.filter)
+        self.assertIsNone(audit_log.results)
 
     def test_debug(self):
-        auditlog = AuditLogger()
-        auditlog.debug('test')
-        self.assertEqual(auditlog.level, logging.DEBUG)
-        self.assertEqual(auditlog.message, 'test')
+        audit_log = AuditLogger()
+        audit_log.debug('test')
+        self.assertEqual(audit_log.level, logging.DEBUG)
+        self.assertEqual(audit_log.message, 'test')
 
     def test_info(self):
-        auditlog = AuditLogger()
-        auditlog.info('test')
-        self.assertEqual(auditlog.level, logging.INFO)
-        self.assertEqual(auditlog.message, 'test')
+        audit_log = AuditLogger()
+        audit_log.info('test')
+        self.assertEqual(audit_log.level, logging.INFO)
+        self.assertEqual(audit_log.message, 'test')
 
     def test_warning(self):
-        auditlog = AuditLogger()
-        auditlog.warning('test')
-        self.assertEqual(auditlog.level, logging.WARNING)
-        self.assertEqual(auditlog.message, 'test')
+        audit_log = AuditLogger()
+        audit_log.warning('test')
+        self.assertEqual(audit_log.level, logging.WARNING)
+        self.assertEqual(audit_log.message, 'test')
 
     def test_error(self):
-        auditlog = AuditLogger()
-        auditlog.error('test')
-        self.assertEqual(auditlog.level, logging.ERROR)
-        self.assertEqual(auditlog.message, 'test')
+        audit_log = AuditLogger()
+        audit_log.error('test')
+        self.assertEqual(audit_log.level, logging.ERROR)
+        self.assertEqual(audit_log.message, 'test')
 
     def test_critical(self):
-        auditlog = AuditLogger()
-        auditlog.critical('test')
-        self.assertEqual(auditlog.level, logging.CRITICAL)
-        self.assertEqual(auditlog.message, 'test')
+        audit_log = AuditLogger()
+        audit_log.critical('test')
+        self.assertEqual(audit_log.level, logging.CRITICAL)
+        self.assertEqual(audit_log.message, 'test')
 
     def test_set_http_request(self):
-        auditlog = AuditLogger()
-        auditlog.set_http_request(method='GET', url='http://localhost/', user_agent='test_agent')
+        audit_log = AuditLogger()
+        audit_log.set_http_request(method='GET', url='http://localhost/', user_agent='test_agent')
 
-        self.assertEqual(auditlog.http_request['method'], 'GET')
-        self.assertEqual(auditlog.http_request['url'], 'http://localhost/')
-        self.assertEqual(auditlog.http_request['user_agent'], 'test_agent')
+        self.assertEqual(audit_log.http_request['method'], 'GET')
+        self.assertEqual(audit_log.http_request['url'], 'http://localhost/')
+        self.assertEqual(audit_log.http_request['user_agent'], 'test_agent')
 
     def test_set_http_response(self):
-        auditlog = AuditLogger()
-        auditlog.set_http_response(status_code=200, reason='OK', headers={'Test': 'test'})
+        audit_log = AuditLogger()
+        audit_log.set_http_response(status_code=200, reason='OK', headers={'Test': 'test'})
 
-        self.assertEqual(auditlog.http_response['status_code'], 200)
-        self.assertEqual(auditlog.http_response['reason'], 'OK')
-        self.assertEqual(auditlog.http_response['headers']['Test'], 'test')
+        self.assertEqual(audit_log.http_response['status_code'], 200)
+        self.assertEqual(audit_log.http_response['reason'], 'OK')
+        self.assertEqual(audit_log.http_response['headers']['Test'], 'test')
 
     def test_set_user(self):
-        auditlog = AuditLogger()
-        auditlog.set_user(
+        audit_log = AuditLogger()
+        audit_log.set_user(
             authenticated=True, provider='test', email='username@host.com',
             roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm'
         )
 
-        self.assertEqual(auditlog.user['authenticated'], True)
-        self.assertEqual(auditlog.user['provider']['name'], 'test')
-        self.assertEqual(auditlog.user['provider']['realm'], 'testrealm')
-        self.assertEqual(auditlog.user['email'], 'username@host.com')
-        self.assertEqual(auditlog.user['roles'], ['role1', 'role2'])
-        self.assertEqual(auditlog.user['ip'], '12.23.34.45')
+        self.assertEqual(audit_log.user['authenticated'], True)
+        self.assertEqual(audit_log.user['provider']['name'], 'test')
+        self.assertEqual(audit_log.user['provider']['realm'], 'testrealm')
+        self.assertEqual(audit_log.user['email'], 'username@host.com')
+        self.assertEqual(audit_log.user['roles'], ['role1', 'role2'])
+        self.assertEqual(audit_log.user['ip'], '12.23.34.45')
 
     def test_set_filter(self):
-        auditlog = AuditLogger()
-        auditlog.set_filter(object_name='objname', fields='fields', terms='terms')
-        self.assertEqual(auditlog.filter['object'], 'objname')
-        self.assertEqual(auditlog.filter['fields'], 'fields')
-        self.assertEqual(auditlog.filter['terms'], 'terms')
+        audit_log = AuditLogger()
+        audit_log.set_filter(object_name='objname', fields='fields', terms='terms')
+        self.assertEqual(audit_log.filter['object'], 'objname')
+        self.assertEqual(audit_log.filter['fields'], 'fields')
+        self.assertEqual(audit_log.filter['terms'], 'terms')
 
     def test_set_results(self):
-        auditlog = AuditLogger()
+        audit_log = AuditLogger()
         test_results = [
             'There are the results',
             ['this', 'is', 'a', 'list'],
@@ -93,37 +93,37 @@ class TestAuditlogger(TestCase):
             123
         ]
         for results in test_results:
-            auditlog.set_results(results)
-            self.assertEqual(auditlog.results, results)
+            audit_log.set_results(results)
+            self.assertEqual(audit_log.results, results)
 
     def test_extras_http_request(self):
-        auditlog = AuditLogger()
-        auditlog.set_http_request(method='GET', url='http://localhost/', user_agent='test_agent')
+        audit_log = AuditLogger()
+        audit_log.set_http_request(method='GET', url='http://localhost/', user_agent='test_agent')
 
-        extras = auditlog._get_extras(log_type='test')
+        extras = audit_log._get_extras(log_type='test')
         self.assertIn('http_request', extras)
         self.assertEqual(extras['http_request']['method'], 'GET')
         self.assertEqual(extras['http_request']['url'], 'http://localhost/')
         self.assertEqual(extras['http_request']['user_agent'], 'test_agent')
 
     def test_extras_http_response(self):
-        auditlog = AuditLogger()
-        auditlog.set_http_response(status_code=200, reason='OK', headers={'Test': 'test'})
+        audit_log = AuditLogger()
+        audit_log.set_http_response(status_code=200, reason='OK', headers={'Test': 'test'})
 
-        extras = auditlog._get_extras(log_type='test')
+        extras = audit_log._get_extras(log_type='test')
         self.assertIn('http_response', extras)
         self.assertEqual(extras['http_response']['status_code'], 200)
         self.assertEqual(extras['http_response']['reason'], 'OK')
         self.assertEqual(extras['http_response']['headers']['Test'], 'test')
 
     def test_extras_user(self):
-        auditlog = AuditLogger()
-        auditlog.set_user(
+        audit_log = AuditLogger()
+        audit_log.set_user(
             authenticated=True, provider='test', email='username@host.com',
             roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm'
         )
 
-        extras = auditlog._get_extras(log_type='test')
+        extras = audit_log._get_extras(log_type='test')
         self.assertIn('user', extras)
         self.assertEqual(extras['user']['authenticated'], True)
         self.assertEqual(extras['user']['provider']['name'], 'test')
@@ -133,17 +133,17 @@ class TestAuditlogger(TestCase):
         self.assertEqual(extras['user']['ip'], '12.23.34.45')
 
     def test_extras_filter(self):
-        auditlog = AuditLogger()
-        auditlog.set_filter(object_name='objname', fields='fields', terms='terms')
+        audit_log = AuditLogger()
+        audit_log.set_filter(object_name='objname', fields='fields', terms='terms')
 
-        extras = auditlog._get_extras(log_type='test')
+        extras = audit_log._get_extras(log_type='test')
         self.assertIn('filter', extras)
         self.assertEqual(extras['filter']['object'], 'objname')
         self.assertEqual(extras['filter']['fields'], 'fields')
         self.assertEqual(extras['filter']['terms'], 'terms')
 
     def test_extras_results(self):
-        auditlog = AuditLogger()
+        audit_log = AuditLogger()
         test_results = [
             'There are the results',
             ['this', 'is', 'a', 'list'],
@@ -151,14 +151,14 @@ class TestAuditlogger(TestCase):
             123
         ]
         for results in test_results:
-            auditlog.set_results(results)
-            extras = auditlog._get_extras(log_type='test')
+            audit_log.set_results(results)
+            extras = audit_log._get_extras(log_type='test')
             self.assertIn('results', extras)
             self.assertEqual(extras['results'], results)
 
     def test_extras_logtype(self):
-        auditlog = AuditLogger()
-        extras = auditlog._get_extras(log_type='test_type')
+        audit_log = AuditLogger()
+        extras = audit_log._get_extras(log_type='test_type')
         self.assertEqual(extras['type'], 'test_type')
 
     @patch('audit_log.logger.audit_logger')
@@ -182,5 +182,5 @@ class TestAuditlogger(TestCase):
         )
 
         # with self.assertLogs(logger=AUDIT_LOGGER_NAME) as mocked_logger:
-        #     auditlog.info("message").send_log()
+        #     audit_log.info("message").send_log()
         #     self.assertEqual(mocked_logger.output, expected_log_output)

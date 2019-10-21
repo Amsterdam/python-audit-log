@@ -51,7 +51,7 @@ setup(
     author='Datapunt Amsterdam',
     author_email='datapunt@amsterdam.nl',
 
-    description='A simple python to enable uniform audit logging',
+    description='A simple python package to enable uniform audit logging',
     long_description=README,
     long_description_content_type="text/markdown",
     url='https://github.com/Amsterdam/auditlog',
