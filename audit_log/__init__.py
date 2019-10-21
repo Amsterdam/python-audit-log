@@ -1,10 +1,11 @@
 import logging
 import sys
 
-from audit_log import app_settings
 from audit_log.formatter import AuditLogFormatter
 
-audit_logger = logging.getLogger(app_settings.AUDIT_LOG_LOGGER_NAME)
+AUDIT_LOGGER_NAME = 'audit_log'
+
+audit_logger = logging.getLogger(AUDIT_LOGGER_NAME)
 audit_logger.setLevel(logging.INFO)
 audit_logger.propagate = False
 
