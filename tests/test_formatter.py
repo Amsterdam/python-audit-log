@@ -12,5 +12,5 @@ class TestFormatter(TestCase):
         mocked_record.audit = audit
         formatter = AuditLogFormatter()
         message = formatter.formatMessage(mocked_record)
-        expected_message = 'audit: {"test": "audit"}'
+        expected_message = '{"audit": {"test": "audit"}}'
         self.assertEqual(message, expected_message)

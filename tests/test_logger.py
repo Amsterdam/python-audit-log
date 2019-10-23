@@ -169,7 +169,8 @@ class TestAuditlogger(TestCase):
                 'user': None,
                 'filter': None,
                 'results': None,
-                'type': 'INFO'
+                'type': 'INFO',
+                'message': 'message'
             }
         }
 
