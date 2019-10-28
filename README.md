@@ -1,4 +1,5 @@
 
+For a Django implementation (which uses this library) see https://github.com/Amsterdam/django-audit-log
 
 # DataPunt Audit Log
 
