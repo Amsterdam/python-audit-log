@@ -18,7 +18,7 @@ them along to logstash, which in turn sends them to elastic.
 1. Install using pip
 
     ```bash
-    pip install audit_log
+    pip install datapunt_audit_log
     ```
    
 2. Add logs to your code
