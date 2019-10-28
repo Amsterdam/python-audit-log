@@ -161,7 +161,7 @@ class TestAuditlogger(TestCase):
         extras = audit_log._get_extras(log_type='test_type')
         self.assertEqual(extras['type'], 'test_type')
 
-    @patch('audit_log.logger.audit_logger')
+    @patch('audit_log.logger.logger')
     def test_send_log_info(self, mocked_audit_logger):
         extected_extra = {'audit': {
                 'http_request': None,

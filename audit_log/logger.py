@@ -1,6 +1,17 @@
 import logging
+import sys
 
-from audit_log import audit_logger
+from audit_log.formatter import AuditLogFormatter
+
+AUDIT_LOGGER_NAME = 'audit_log'
+
+logger = logging.getLogger(AUDIT_LOGGER_NAME)
+logger.setLevel(logging.INFO)
+logger.propagate = False
+
+handler = logging.StreamHandler(stream=sys.stdout)
+handler.setFormatter(AuditLogFormatter())
+logger.addHandler(handler)
 
 
 class AuditLogger:
@@ -83,7 +94,7 @@ class AuditLogger:
         return self
 
     def send_log(self) -> None:
-        audit_logger.log(
+        logger.log(
             level=self.level,
             msg=self.message,
             extra={'audit': self._get_extras(logging.getLevelName(self.level))})
