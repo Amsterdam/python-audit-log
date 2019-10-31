@@ -1,4 +1,14 @@
 
+## 0.2.0 (31-10-2019)
+
+### Note worthy changes
+- Implemented prepare release commands (PR #2)
+- Allow to set filter kwargs to be more generic (PR #1)
+
+### Backwards incompatible changes
+- AuditLogger.filter() signature changed to filter(object_name: str, kwargs: dict). 
+See https://github.com/Amsterdam/python-audit-log/commit/8a4daf8a04d55cc9adc7c5283b3633fc4ef43b2f
+
 
 ## 0.1.1 (28-10-2019)
 
