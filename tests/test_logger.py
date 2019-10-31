@@ -79,10 +79,9 @@ class TestAuditlogger(TestCase):
 
     def test_set_filter(self):
         audit_log = AuditLogger()
-        audit_log.set_filter(object_name='objname', fields='fields', terms='terms')
+        audit_log.set_filter(object_name='objname', kwargs={'field': 'filter'})
         self.assertEqual(audit_log.filter['object'], 'objname')
-        self.assertEqual(audit_log.filter['fields'], 'fields')
-        self.assertEqual(audit_log.filter['terms'], 'terms')
+        self.assertEqual(audit_log.filter['kwargs'], {'field': 'filter'})
 
     def test_set_results(self):
         audit_log = AuditLogger()
@@ -134,13 +133,12 @@ class TestAuditlogger(TestCase):
 
     def test_extras_filter(self):
         audit_log = AuditLogger()
-        audit_log.set_filter(object_name='objname', fields='fields', terms='terms')
+        audit_log.set_filter(object_name='objname', kwargs={'field': 'filter'})
 
         extras = audit_log._get_extras(log_type='test')
         self.assertIn('filter', extras)
         self.assertEqual(extras['filter']['object'], 'objname')
-        self.assertEqual(extras['filter']['fields'], 'fields')
-        self.assertEqual(extras['filter']['terms'], 'terms')
+        self.assertEqual(extras['filter']['kwargs'], {'field': 'filter'})
 
     def test_extras_results(self):
         audit_log = AuditLogger()

@@ -40,7 +40,7 @@ regarding the request:
 set_http_request(self, method: str, url: str, user_agent: str = '') -> 'AuditLogger'
 set_http_response(self, status_code: int, reason: str, headers: dict = None) -> 'AuditLogger'
 set_user(self, authenticated: bool, provider: str, email: str, roles: list = None, ip: str = '', realm: str = '') -> 'AuditLogger'
-set_filter(self, object_name: str, fields: str, terms: str) -> 'AuditLogger'
+set_filter(self, object_name: str, kwargs: dict) -> 'AuditLogger'
 set_results(self, results: list = None) -> 'AuditLogger'
 ```
 
@@ -122,7 +122,7 @@ This method will add the following details to the log:
 ```
 
 ### Filter 
-`AuditLogger().set_filter(self, object_name: str, fields: str, terms: str)` allows to provide
+`AuditLogger().set_filter(self, object_name: str, kwargs: dict)` allows to provide
 info on the requested type of object and the filters that have been used  (a user searches 
 for 'terms', which are matched on specific 'fields' of the 'object').
 
@@ -131,8 +131,10 @@ This method will add the following details to the log:
 ```json
 "filter": {
     "object": "Object name that is requested",
-    "fields": "Fields that are being filtered on, if applicable",
-    "terms": "Search terms, if applicable"
+    "kwargs": {
+        'fields': 'filter values',
+        'more_fields': 'more filter values'
+    }
 }
 ```
 

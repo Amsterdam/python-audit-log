@@ -81,11 +81,10 @@ class AuditLogger:
         }
         return self
 
-    def set_filter(self, object_name: str, fields: str, terms: str) -> 'AuditLogger':
+    def set_filter(self, object_name: str, kwargs: dict) -> 'AuditLogger':
         self.filter = {
             'object': object_name,
-            'fields': fields,
-            'terms': terms
+            'kwargs': kwargs,
         }
         return self
 
