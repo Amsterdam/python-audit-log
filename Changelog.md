@@ -1,4 +1,13 @@
 
+## 0.2.1 (31-10-2019)
+
+### Note worthy changes
+- New version because I deleted 0.2.0 and pypi doesn't want to reuse the version.
+
+### Backwards incompatible changes
+- None
+
+
 ## 0.2.0 (31-10-2019)
 
 ### Note worthy changes
