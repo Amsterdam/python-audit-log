@@ -1,11 +1,12 @@
 .PHONY: release dist build test coverage clean distclean
 
+
 PYTHON = python3
 
 help:                           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-release: clean test dist              ## Test, create a distribution and upload it to pypi
+release: clean test dist        ## Test, create a distribution and upload it to pypi
 	twine upload dist/*
 
 dist:                           ## Create a distribution
@@ -19,3 +20,12 @@ test:                           ## Run the tests
 	
 clean:                          ## Delete everything in dist/*
 	rm -rf dist/*
+
+prepare_major:                  ## Prepare major release: add changes to Changelog.md, bump version, commit and coverage
+	./prepare_release.sh major
+
+prepare_minor:                  ## Prepare minor release: add changes to Changelog.md, bump version, commit and coverage
+	./prepare_release.sh minor
+
+prepare_patch:                  ## Prepare patch release: add changes to Changelog.md, bump version, commit and coverage
+	./prepare_release.sh patch

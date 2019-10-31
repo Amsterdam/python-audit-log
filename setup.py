@@ -42,7 +42,7 @@ test_requirements = [
 ]
 
 extra_requirements = {
-    'dev': test_requirements + ['twine'],
+    'dev': test_requirements + ['twine', 'bump2version'],
 }
 
 setup(
