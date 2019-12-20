@@ -1,4 +1,15 @@
 
+## 0.3.0 (20-12-2019)
+
+### Note worthy changes
+- Made AuditLogger more configurable
+- Raise test coverage for formatter
+- Added requirements files useful while developing
+
+### Backwards incompatible changes
+- None
+
+
 ## 0.2.1 (31-10-2019)
 
 ### Note worthy changes
