@@ -5,19 +5,14 @@ from audit_log.formatter import AuditLogFormatter
 
 AUDIT_LOGGER_NAME = 'audit_log'
 
-logger = logging.getLogger(AUDIT_LOGGER_NAME)
-logger.setLevel(logging.INFO)
-logger.propagate = False
-
-handler = logging.StreamHandler(stream=sys.stdout)
-handler.setFormatter(AuditLogFormatter())
-logger.addHandler(handler)
-
 
 class AuditLogger:
 
     def __init__(self) -> None:
         super().__init__()
+
+        self.logger = self.init_logger()
+
         self.level = logging.INFO
         self.message = ''
         self.http_request = None
@@ -25,6 +20,26 @@ class AuditLogger:
         self.user = None
         self.filter = None
         self.results = None
+
+    def init_logger(self) -> logging.Logger:
+        logger = logging.getLogger(self.get_logger_name())
+        logger.setLevel(logging.INFO)
+        logger.propagate = False
+
+        handler = self.get_log_handler()
+        formatter = self.get_log_formatter()
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        return logger
+
+    def get_logger_name(self) -> str:
+        return AUDIT_LOGGER_NAME
+
+    def get_log_handler(self) -> logging.Handler:
+        return logging.StreamHandler(stream=sys.stdout)
+
+    def get_log_formatter(self) -> logging.Formatter:
+        return AuditLogFormatter()
 
     def debug(self, msg: str) -> 'AuditLogger':
         self.level = logging.DEBUG
@@ -93,7 +108,7 @@ class AuditLogger:
         return self
 
     def send_log(self) -> None:
-        logger.log(
+        self.logger.log(
             level=self.level,
             msg=self.message,
             extra={'audit': self._get_extras(logging.getLevelName(self.level))})
@@ -108,3 +123,4 @@ class AuditLogger:
             'type': log_type,
             'message': self.message
         }
+
