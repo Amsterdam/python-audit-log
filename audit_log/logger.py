@@ -123,4 +123,3 @@ class AuditLogger:
             'type': log_type,
             'message': self.message
         }
-
