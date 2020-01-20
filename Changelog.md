@@ -1,4 +1,13 @@
 
+## 0.3.1 (20-01-2020)
+
+### Note worthy changes
+- Prevent duplicate log handlers for the audit log
+
+### Backwards incompatible changes
+- None
+
+
 ## 0.3.0 (20-12-2019)
 
 ### Note worthy changes
