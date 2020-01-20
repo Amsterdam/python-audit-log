@@ -31,7 +31,7 @@ class AuditLogger:
             formatter = self.get_log_formatter()
             handler.setFormatter(formatter)
             logger.addHandler(handler)
-            
+
         return logger
 
     def get_logger_name(self) -> str:
