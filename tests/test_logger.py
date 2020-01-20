@@ -49,6 +49,25 @@ class TestAuditlogger(TestCase):
         self.assertEqual(handler, mocked_handler)
         mocked_handler.setFormatter.assert_called_with(mocked_formatter)
 
+    @patch('audit_log.logger.AuditLogger.get_logger_name')
+    def test_multiple_init_logger(self, mocked_get_logger_name):
+        # we ran into an issue where each instance of AuditLogger would add an extra log handler
+        # here we test and assert that multiple calls to init_logger() will not add more handlers
+        # to the main logger object.
+        mocked_name = 'audit_logger_name'
+        mocked_get_logger_name.return_value = mocked_name
+
+        # ensure no handlers exist
+        logger = logging.getLogger(mocked_name)
+        for handler in logger.handlers:
+            logger.removeHandler(handler)
+
+        self.assertEqual(len(logger.handlers), 0, "Expected 0 handlers, but found: {}".format(logger.handlers))
+        AuditLogger().init_logger()
+        self.assertEqual(len(logger.handlers), 1, "Expected 1 handler, but found: {}".format(logger.handlers))
+        AuditLogger().init_logger()
+        self.assertEqual(len(logger.handlers), 1, "Expected 1 handler, but found: {}".format(logger.handlers))
+
     def test_default_log_level(self):
         self.assertEqual(self.audit_log.level, logging.INFO)
         self.assertEqual(self.audit_log.message, '')
