@@ -26,10 +26,12 @@ class AuditLogger:
         logger.setLevel(logging.INFO)
         logger.propagate = False
 
-        handler = self.get_log_handler()
-        formatter = self.get_log_formatter()
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
+        if not logger.hasHandlers():
+            handler = self.get_log_handler()
+            formatter = self.get_log_formatter()
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            
         return logger
 
     def get_logger_name(self) -> str:
