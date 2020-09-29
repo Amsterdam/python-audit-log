@@ -1,0 +1,13 @@
+version: "3.5"
+volumes:
+  tox:
+  pyenv:
+
+services:
+  test:
+    build:
+      context: .
+      target: tests
+    volumes:
+      - tox:/app/.tox
+      - pyenv:/app/.pyenv
