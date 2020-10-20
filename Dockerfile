@@ -1,4 +1,4 @@
-FROM amsterdam/python:3.8-buster as tests
+FROM amsterdam/python:3.9-buster-minimal as tests
 MAINTAINER datapunt@amsterdam.nl
 
 WORKDIR /app_install
