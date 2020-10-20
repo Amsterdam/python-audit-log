@@ -14,17 +14,23 @@ release: clean test dist        ## Test, create a distribution and upload it to 
 dist:                           ## Create a distribution
 	$(PYTHON) setup.py sdist bdist_wheel
 
-build:                          ## Build the package
+build-package:                  ## Build the package
 	$(PYTHON) setup.py build
 
-bash:
-	$(run) test bash
+clean-dist:                     ## Delete everything in dist/*
+	rm -rf dist/*
+
+build:                          ## Build docker image
+	$(dc) build
+
+clean:                          ## Clean docker stuff
+	$(dc) down -v --remove-orphans
+
+bash:                           ## Run the container and start bash
+	$(run) dev bash
 
 test:                           ## Execute tests
 	$(run) test $(ARGS)
-	
-clean:                          ## Delete everything in dist/*
-	rm -rf dist/*
 
 prepare_major:                  ## Prepare major release: add changes to Changelog.md, bump version, commit and coverage
 	./prepare_release.sh major
