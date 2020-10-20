@@ -1,4 +1,17 @@
 
+## 0.4.0 (20-10-2020)
+
+### Note worthy changes
+- Don't pin dependencies
+- Dropped 3.5 support, added 3.9
+- Use python 3.9 buster-minimal base image
+- Added github CI workflow
+- Run tox inside docker using pyenv for versions
+
+### Backwards incompatible changes
+- None
+
+
 ## 0.3.1 (20-01-2020)
 
 ### Note worthy changes
