@@ -1,0 +1,5 @@
+.local
+.idea
+.git
+.env
+docker-compose.override.yml

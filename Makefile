@@ -2,6 +2,8 @@
 
 
 PYTHON = python3
+dc = docker-compose
+run = $(dc) run --rm
 
 help:                           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -15,8 +17,11 @@ dist:                           ## Create a distribution
 build:                          ## Build the package
 	$(PYTHON) setup.py build
 
-test:                           ## Run the tests
-	tox
+bash:
+	$(run) test bash
+
+test:                           ## Execute tests
+	$(run) test $(ARGS)
 	
 clean:                          ## Delete everything in dist/*
 	rm -rf dist/*
