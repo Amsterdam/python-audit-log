@@ -1,3 +1,4 @@
+import codecs
 import os
 import sys
 
@@ -24,6 +25,28 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+def read(rel_path):
+    here = os.path.abspath(os.path.dirname(__file__))
+    with codecs.open(os.path.join(here, rel_path), 'r') as fp:
+        return fp.read()
+
+
+def get_version(rel_path):
+    """
+    Read the package version from a single source.
+
+    See https://packaging.python.org/guides/single-sourcing-package-version/#single-sourcing-the-package-version
+    :param rel_path:
+    :return:
+    """
+    for line in read(rel_path).splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
+
+
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
@@ -43,9 +66,11 @@ extra_requirements = {
     'dev': test_requirements + ['twine', 'bump2version'],
 }
 
+
+
 setup(
     name='datapunt-audit-log',
-    version="0.3.1",
+    version=get_version('src/audit_log/__init__.py'),
     license='Mozilla Public License 2.0',
 
     author='Datapunt Amsterdam',
