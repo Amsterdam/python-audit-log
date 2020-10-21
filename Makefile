@@ -8,7 +8,7 @@ run = $(dc) run --rm
 help:                           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-release: clean test dist        ## Test, create a distribution and upload it to pypi
+release: clean-dist build test dist        ## Test, create a distribution and upload it to pypi
 	twine upload dist/*
 
 dist:                           ## Create a distribution
