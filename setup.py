@@ -40,9 +40,9 @@ def get_version(rel_path):
     :return:
     """
     for line in read(rel_path).splitlines():
-        if line.startswith('__version__'):
-            delim = '"' if '"' in line else "'"
-            return line.split(delim)[1]
+        if line.startswith('__version_info__'):
+            # transform __version_info__ = (x, y, z) to "x.y.z"
+            return line.split('(')[1].split(')')[0].replace(', ', '.')
     else:
         raise RuntimeError("Unable to find version string.")
 
