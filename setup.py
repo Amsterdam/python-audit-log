@@ -4,6 +4,8 @@ import sys
 from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
+import audit_log
+
 
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
@@ -45,7 +47,7 @@ extra_requirements = {
 
 setup(
     name='datapunt-audit-log',
-    version="0.3.1",
+    version=audit_log.__version__,
     license='Mozilla Public License 2.0',
 
     author='Datapunt Amsterdam',

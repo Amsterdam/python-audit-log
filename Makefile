@@ -12,7 +12,7 @@ release: clean test dist        ## Test, create a distribution and upload it to 
 	twine upload dist/*
 
 dist:                           ## Create a distribution
-	$(PYTHON) setup.py sdist bdist_wheel
+	PYTHONPATH=src/ $(PYTHON) setup.py sdist bdist_wheel
 
 build-package:                  ## Build the package
 	$(PYTHON) setup.py build
