@@ -8,11 +8,11 @@ run = $(dc) run --rm
 help:                           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-release: clean-dist build test dist        ## Test, create a distribution and upload it to pypi
+release: clean-dist build-package build test dist        ## Test, create a distribution and upload it to pypi
 	twine upload dist/*
 
 dist:                           ## Create a distribution
-	PYTHONPATH=src/ $(PYTHON) setup.py sdist bdist_wheel
+	$(PYTHON) setup.py sdist bdist_wheel
 
 build-package:                  ## Build the package
 	$(PYTHON) setup.py build
