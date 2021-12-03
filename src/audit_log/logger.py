@@ -85,9 +85,10 @@ class AuditLogger:
         return self
 
     def set_user(self, authenticated: bool, provider: str, email: str,
-                 roles: list = None, ip: str = '', realm: str = '') -> 'AuditLogger':
+                 roles: list = None, ip: str = '', realm: str = '', username: str = '') -> 'AuditLogger':
         self.user = {
             'authenticated': authenticated,
+            'username': username,
             'email': email,
             'roles': roles,
             'ip': ip,
