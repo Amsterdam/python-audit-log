@@ -1,4 +1,7 @@
 
+## [unreleased - 03-01-2021]
+- Allow `username` logging when user is authenticated
+
 ## 0.4.0 (20-10-2020)
 
 ### Note worthy changes
