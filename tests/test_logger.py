@@ -119,7 +119,8 @@ class TestAuditlogger(TestCase):
     def test_set_user(self):
         self.audit_log.set_user(
             authenticated=True, provider='test', email='username@host.com',
-            roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm'
+            roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm',
+            username='username'
         )
 
         self.assertEqual(self.audit_log.user['authenticated'], True)
@@ -128,6 +129,7 @@ class TestAuditlogger(TestCase):
         self.assertEqual(self.audit_log.user['email'], 'username@host.com')
         self.assertEqual(self.audit_log.user['roles'], ['role1', 'role2'])
         self.assertEqual(self.audit_log.user['ip'], '12.23.34.45')
+        self.assertEqual(self.audit_log.user['username'], 'username')
 
     def test_set_filter(self):
         self.audit_log.set_filter(object_name='objname', kwargs={'field': 'filter'})
@@ -166,7 +168,8 @@ class TestAuditlogger(TestCase):
     def test_extras_user(self):
         self.audit_log.set_user(
             authenticated=True, provider='test', email='username@host.com',
-            roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm'
+            roles=['role1', 'role2'], ip='12.23.34.45', realm='testrealm',
+            username='username'
         )
 
         extras = self.audit_log._get_extras(log_type='test')
@@ -177,6 +180,7 @@ class TestAuditlogger(TestCase):
         self.assertEqual(extras['user']['email'], 'username@host.com')
         self.assertEqual(extras['user']['roles'], ['role1', 'role2'])
         self.assertEqual(extras['user']['ip'], '12.23.34.45')
+        self.assertEqual(extras['user']['username'], 'username')
 
     def test_extras_filter(self):
         self.audit_log.set_filter(object_name='objname', kwargs={'field': 'filter'})
